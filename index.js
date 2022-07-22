@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost/mongo-exercises")
+  // .connect("mongodb://localhost:27017/mongo-exercises")
+  .connect("mongodb://127.0.0.1:27017/mongo-exercises")
   .then(() => {
     console.log("connected to database ......");
   })
@@ -42,15 +43,18 @@ async function getCourses() {
 }
 // getCourses();
 async function updateCourse(id) {
-  console.log("bat dau tim kiem");
-  const course = await Courses.findById(id);
+  const course = await Courses.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        isPublished: false,
+        author: "moc2",
+      },
+    },
+    { new: true }
+  );
+
   console.log(course);
-  if (!course) return;
-  console.log(course);
-  //   course.isPublished = true;
-  //   course.author = "another author";
-  //   const result = await course.save();
-  //   console.log(result);
 }
 
-updateCourse("5a68fdc3615eda645bc6bdec");
+updateCourse("5a68ff090c553064a218a547");
